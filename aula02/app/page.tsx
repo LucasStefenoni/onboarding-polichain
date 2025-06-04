@@ -1,6 +1,7 @@
 'use client';
 
 import Button from "@/components/Button";
+import Door from "@/components/Door";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,8 +13,7 @@ export default function Home() {
     {variavel == 5?
       <div>Valor: 5</div> : <div>Valor: 3</div>
     }
-    <Link href={"page.tsx"}> </Link> 
-    <Button texto={"PAGINA 1"} aoClicar={() => alert("pagina 1")}></Button>
+    <Door sala={"sala1"}></Door>
    </div>
   );
 }
