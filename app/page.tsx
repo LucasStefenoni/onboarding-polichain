@@ -9,6 +9,7 @@ import { Jogador } from "./generated/prisma";
 import { useRouter } from 'next/navigation';
 
 let pags: string[] = ["pagFogo/", "pagOuro/", "pagUrso/"];
+//
 type jogador = {id: number; name: string; createdAt: string; pontos: number}
 
 export default function Home() {  
