@@ -110,11 +110,12 @@ const handleDelete = async (id: number) => {
           <Door sala={ (pags[2]) }  onClick={handleDoorClick}></Door>
         </div>
       </div>
-        <div className="container">
-          <form onSubmit={handleSubmit}>
-            <h1>Jogadores</h1>
-            <input name="Nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)}/>
-              <button type="submit">
+        <div className="container mx-auto max-w-lg p-4">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md space-y-6">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Jogadores</h1>
+            <input name="Nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Digite o nome do jogador"
+            className="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-shadow"/>
+              <button type="submit"  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition-colors duration-200">
                 {editingId ? 'Atualizar' : 'Adicionar'} 
               </button>
           </form>
@@ -124,17 +125,16 @@ const handleDelete = async (id: number) => {
             <div
               key={jogador.id}
                onClick={() => setSelectedJogadorId(jogador.id)}
-               className={`flex items-center p-2 border-b border-gray-200 dark:border-gray-700 rounded-md cursor-pointer transition-colors ${
+               className={`flex items-center p-2 border-b border-gray-200 dark:border-gray-700 rounded-md cursor-pointer transition-colors text-white ${
                 selectedJogadorId === jogador.id 
                   ? 'bg-blue-200 dark:bg-blue-800' 
                   : 'hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
-              <p>{jogador.nome} </p>
-              <span> </span>
-              <p>{jogador.pontos}</p>
+              <p>{jogador.nome} - </p>
+              <p> - Pontos: <span className="p1"></span> {jogador.pontos}</p>
 
-              <div className="w-2/5 flex justify-end gap-2">
+              <div className="w-2/5 flex justify-end gap-2 text-white">
                 <button onClick={() => handleDelete(jogador.id)}>
                   Excluir
                 </button>
