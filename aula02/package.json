@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^6.9.0",
     "aula02": "file:",
     "material": "^0.9.23",
     "next": "15.3.3",
@@ -20,6 +21,7 @@
     "@types/node": "20.17.57",
     "@types/react": "19.1.6",
     "@types/react-dom": "^19",
+    "prisma": "^6.9.0",
     "tailwindcss": "^4",
     "typescript": "5.8.3"
   }
