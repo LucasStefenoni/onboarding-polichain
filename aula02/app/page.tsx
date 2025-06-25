@@ -1,31 +1,43 @@
 'use client';
 
-import Button from "@/components/Button";
-import Door from "@/components/Door";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Jogador } from "./generated/prisma";
 import { useRouter } from 'next/navigation';
+import Door from "../components/Door";
 
 let pags: string[] = ["pagFogo/", "pagOuro/", "pagUrso/"];
 type jogador = {id: number; name: string; createdAt: string; pontos: number}
 
 export default function Home() {  
-  const [Jogadores, setJogadores] = useState<Jogador[]>([])
+  const [jogadores, setJogadores] = useState<Jogador[]>([])
   const [nome, setNome] = useState('')
   const [editingId, setEditingId] = useState<number | null> (null)
   const [selectedJogadorId, setSelectedJogadorId] = useState<number | null>(null);
   const router = useRouter();
-const load = () =>
-  fetch('/api/jogadores') 
-    .then(res => res.json()) 
-    .then(data => setJogadores(data))
-    .catch(console.error)
-
-  useEffect( ()=> {
-    load()
-  }, [])
+const load = () => {
+  fetch('/api/jogadores')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Falha ao buscar dados da API: Status ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (Array.isArray(data)) {
+        setJogadores(data);
+      } else {
+        console.error("Os dados recebidos da API não são um array:", data);
+        setJogadores([]);
+      }
+    })
+    .catch(error => {
+      console.error("Erro na função loadJogadores:", error);
+      setJogadores([]);
+    });
+};
+useEffect(() => {
+  load();
+}, []);
 
 const handleDoorClick = async (sala: string) => {
   if (!selectedJogadorId) {
@@ -41,7 +53,6 @@ const handleDoorClick = async (sala: string) => {
      router.push(sala);
     return;
   }
-  console.log('--- INICIANDO FETCH PARA O ENDPOINT:', endpoint);
   try {
     const response = await fetch(endpoint, { method: 'POST' });
     if (!response.ok) {
@@ -121,7 +132,7 @@ const handleDelete = async (id: number) => {
           </form>
         </div>
         <div>
-          {Jogadores.map((jogador) => (
+          {jogadores.map((jogador) => (
             <div
               key={jogador.id}
                onClick={() => setSelectedJogadorId(jogador.id)}
